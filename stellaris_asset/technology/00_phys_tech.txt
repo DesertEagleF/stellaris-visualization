@@ -3,20 +3,25 @@
 ##################
 #If you change any of these, use replace in files so the values are the same across all files
 
-@tier1cost1 = 360
-@tier1cost2 = 480
-@tier1cost3 = 600
-@tier1cost4 = 720
+@tier1cost1 = 500
+@tier1cost2 = 750
+@tier1cost3 = 1000
 
-@tier2cost1 = 1000
-@tier2cost2 = 1400
-@tier2cost3 = 1800
-@tier2cost4 = 2200
+@tier2cost1 = 1500
+@tier2cost2 = 2000
+@tier2cost3 = 2500
 
-@tier3cost1 = 3000
-@tier3cost2 = 4000
-@tier3cost3 = 5000
-@tier3cost4 = 6000
+@tier3cost1 = 4000
+@tier3cost2 = 5000
+@tier3cost3 = 6000
+
+@tier4cost1 = 8000
+@tier4cost2 = 10000
+@tier4cost3 = 12000
+
+@tier5cost1 = 15000
+@tier5cost2 = 17500
+@tier5cost3 = 20000
 
 ####################
 ### TECH WEIGHTS ###
@@ -25,17 +30,22 @@
 @tier1weight1 = 100
 @tier1weight2 = 95
 @tier1weight3 = 90
-@tier1weight4 = 85
 
-@tier2weight1 = 75
-@tier2weight2 = 70
-@tier2weight3 = 65
-@tier2weight4 = 60
+@tier2weight1 = 85
+@tier2weight2 = 75
+@tier2weight3 = 70
 
-@tier3weight1 = 50
-@tier3weight2 = 45
-@tier3weight3 = 40
-@tier3weight4 = 35
+@tier3weight1 = 65
+@tier3weight2 = 60
+@tier3weight3 = 50
+
+@tier4weight1 = 45
+@tier4weight2 = 40
+@tier4weight3 = 35
+
+@tier5weight1 = 30
+@tier5weight2 = 25
+@tier5weight3 = 20
 
 # ## physics technologies
 
@@ -45,72 +55,17 @@
 
 tech_databank_uplinks = {
 	area = physics
-	cost = @tier1cost1
+	cost = 0
 	tier = 1
 	category = { computing }
-	weight = @tier1weight1
+	weight = 0
+	
+	potential = { always = no }
 	
 	# allows Science Ships to boost the research-output of a planet
+	# unlocked by tradition
 	
 	feature_flags = { assist_research }
-	
-	weight_modifier = {
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_computing"
-			}
-		}
-	}
-	
-	ai_weight = {
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_computing"
-			}
-		}
-	}
-}
-
-tech_improved_databank_uplinks = {
-	area = physics
-	cost = @tier2cost1
-	tier = 2
-	category = { computing }
-	prerequisites = { "tech_databank_uplinks" }
-	weight = @tier2weight1
-	
-	# unlocks uplink-component, assist research-action is twice as effective
-	
-	weight_modifier = {
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_computing"
-			}
-		}
-	}
-	
-	prereqfor_desc = {
-		ship = {
-			title = "TECH_UNLOCK_IMPROVED_UPLINKS_FORMS_TITLE"
-			desc = "TECH_UNLOCK_IMPROVED_UPLINKS_FORMS_DESC"
-		}
-	}
-	
-	ai_weight = {
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_computing"
-			}
-		}
-	}
 }
 
 # ##################
@@ -131,17 +86,19 @@ tech_curator_lab = {
 	area = physics
 	category = { computing }
 	tier = 2
-	cost = @tier1cost4
+	cost = @tier2cost1
 	is_reverse_engineerable = no
 	is_rare = yes
-	weight = @tier1weight4
+	weight = @tier2weight1
 	
-	#unlocks Curator Exploration Lab
+	modifier = {
+		science_ship_survey_speed = 0.33
+	}
 	
 	weight_modifier = {
 		modifier = {
 			factor = 0.50
-				has_modifier = "curator_insight"
+			has_modifier = "curator_insight"
 		}
 		modifier = {
 			factor = 3
@@ -174,17 +131,21 @@ tech_archeology_lab = {
 	area = physics
 	category = { computing }
 	tier = 2
-	cost = @tier1cost4
+	cost = @tier2cost1
 	is_reverse_engineerable = no
 	is_rare = yes
-	weight = @tier1weight4
+	weight = @tier2weight1
 	
-	#unlocks Curator Archeology Lab
+	modifier = {
+		ship_anomaly_fail_risk = -0.05
+		ship_anomaly_generation_chance_mult = 0.05
+		ship_anomaly_research_speed_mult = 0.25	
+	}
 	
 	weight_modifier = {
 		modifier = {
 			factor = 0.50
-				has_modifier = "curator_insight"
+			has_modifier = "curator_insight"
 		}
 		modifier = {
 			factor = 3
@@ -270,12 +231,12 @@ tech_physics_lab_1 = {
 }
 
 tech_physics_lab_2 = {
-	cost = @tier2cost2
+	cost = @tier2cost3
 	area = physics
 	tier = 2
 	category = { computing }
 	prerequisites = { "tech_physics_lab_1" "tech_colonial_centralization"}
-	weight = @tier2weight2
+	weight = @tier2weight3
 		
 	#unlock physics lab lvl 2
 	
@@ -318,12 +279,12 @@ tech_physics_lab_2 = {
 }
 
 tech_physics_lab_3 = {
-	cost = @tier3cost3
+	cost = @tier4cost2
 	area = physics
-	tier = 3
+	tier = 4
 	category = { computing }
 	prerequisites = { "tech_physics_lab_2" "tech_galactic_administration"}
-	weight = @tier3weight3
+	weight = @tier4weight2
 		
 	# # unlock physics lab lvl 3
 	
@@ -367,21 +328,25 @@ tech_physics_lab_3 = {
 
 tech_global_research_initiative = {
 	area = physics
-	tier = 2
-	cost = @tier3cost2
-	category = { statecraft }
-	prerequisites = { "tech_physics_lab_1" "tech_galactic_administration" }
-	weight = @tier3weight2
+	tier = 4
+	cost = @tier4cost1
+	category = { computing }
+	prerequisites = { "tech_physics_lab_1" "tech_colonial_centralization" }
+	weight = @tier4weight1
 	is_rare = yes
 	
 	weight_modifier = {
 		factor = 0.5
 		modifier = {
+			factor = 0
+			has_authority = auth_machine_intelligence
+		}
+		modifier = {
 			factor = 0.25
 			NOR = {
 				research_leader = {
 					area = physics
-					has_trait = "leader_trait_expertise_statecraft"
+					has_trait = "leader_trait_expertise_computing"
 				}
 				research_leader = {
 					area = physics
@@ -393,7 +358,7 @@ tech_global_research_initiative = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_statecraft"
+				has_trait = "leader_trait_expertise_computing"
 			}
 		}
 	}
@@ -403,7 +368,7 @@ tech_global_research_initiative = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_statecraft"
+				has_trait = "leader_trait_expertise_computing"
 			}
 		}
 	}
@@ -453,32 +418,70 @@ tech_cryostasis_1 = {
 	
 	modifier = {
 		planet_colony_development_speed_mult = 0.50
-		shipsize_colonizer_build_cost_mult = -0.25
+	}
+	
+	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
+			}
+		}
+	}
+	
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
+			}
+		}
 	}
 }
 
 #Self-Aware Colony Ships
 tech_cryostasis_2 = {
-	cost = @tier2cost1
+	cost = @tier2cost3
 	area = physics
-	tier = 2
+	tier = 3
 	category = { computing }
 	prerequisites = { "tech_self_aware_logic" "tech_cryostasis_1" }
-	weight = @tier2weight1
+	weight = @tier2weight3
 	
 	modifier = {
 		planet_colony_development_speed_mult = 0.50
-		shipsize_colonizer_build_cost_mult = -0.15
+	}
+	
+	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
+			}
+		}
+	}
+	
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
+			}
+		}
 	}
 }
 
 tech_self_aware_logic = {
 	area = physics
 	tier = 2
-	cost = @tier2cost1
+	cost = @tier2cost2
 	category = { computing }
 	prerequisites = { "tech_administrative_ai" }
-	weight = @tier2weight1
+	weight = @tier2weight2
 	
 	modifier = {
 		num_tech_alternatives_add = 1
@@ -508,11 +511,10 @@ tech_self_aware_logic = {
 #Automated Exploration Protocols
 tech_automated_exploration = {
 	area = physics
-	tier = 2
-	cost = @tier2cost1
+	tier = 1
+	cost = @tier1cost2
 	category = { computing }
-	prerequisites = { "tech_administrative_ai" }
-	weight = @tier2weight1
+	weight = @tier1weight2
 	
 	#allow auto-explore on science ships
 	feature_flags = {
@@ -520,8 +522,8 @@ tech_automated_exploration = {
 	}
 	
 	modifier = {
-		science_ship_survey_speed = 0.5
-	}	
+		science_ship_survey_speed = 0.25
+	}
 	
 	weight_modifier = {
 		modifier = {
@@ -531,35 +533,32 @@ tech_automated_exploration = {
 				has_trait = "leader_trait_expertise_computing"
 			}
 		}
-	
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_discovery_adopt
+		}
+		
+		modifier = {
+			factor = 0
+			years_passed < 5
+		}
+		
 		modifier = {
 			factor = 2.0
 			is_ai = no
 			years_passed > 10
-		}	
-	
+		}
+		
+		modifier = {
+			factor = 2.0
+			is_ai = no
+			years_passed > 15
+		}
+		
 		modifier = {
 			factor = 2.0
 			is_ai = no
 			years_passed > 20
-		}		
-		
-		modifier = {
-			factor = 2.0
-			is_ai = no
-			years_passed > 30
-		}
-		
-		modifier = {
-			factor = 2.0
-			is_ai = no
-			years_passed > 40
-		}
-		
-		modifier = {
-			factor = 2.0
-			is_ai = no
-			years_passed > 50
 		}
 		
 		modifier = {
@@ -594,70 +593,70 @@ tech_automated_exploration = {
 	}
 }
 
-tech_sentient_ai = {
+tech_sapient_ai = {
 	area = physics
-	tier = 3
-	cost = @tier2cost4
+	tier = 4
+	cost = @tier4cost1
 	category = { computing }
-	is_rare = yes
-	is_dangerous = yes
 	prerequisites = { "tech_self_aware_logic" }
-	weight = @tier2weight4
+	weight = @tier4weight1
 	
 	modifier = {
-		all_technology_research_speed = 0.10
+		all_technology_research_speed = 0.05
 	}
 	
-	weight_modifier = {
-		factor = 0.5
-		modifier = {
-			factor = 0.20
-			NOR = {
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_expertise_computing"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_curator"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_spark_of_genius"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_maniacal"
-				}
-			}
-		}
+	potential = {
+		NOT = { has_ethic = ethic_gestalt_consciousness }
+	}
+	
+	weight_modifier = {	
 		modifier = {
 			factor = 1.25
 			research_leader = {
 				area = physics
 				has_trait = "leader_trait_expertise_computing"
-				has_level > 2
 			}
 		}
-		modifier = {
-			factor = 1.10
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_maniacal"
-			}
-		}
-		modifier = {
-			factor = 1.20
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_spark_of_genius"
-			}
-		}
-		#BREAKTHROUGH - check for scientist
 	}
 	
 	ai_weight = {
-		factor = 3 #rare tech
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
+			}
+		}
+	}
+}
+
+tech_positronic_implants = {
+	area = physics
+	tier = 4
+	cost = @tier4cost1
+	category = { computing }
+	prerequisites = { "tech_self_aware_logic" }
+	weight = @tier4weight1
+	
+	modifier = {
+		all_technology_research_speed = 0.05
+	}
+	
+	potential = {
+		has_ethic = ethic_gestalt_consciousness
+	}
+	
+	weight_modifier = {	
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
+			}
+		}
+	}
+	
+	ai_weight = {
 		modifier = {
 			factor = 1.25
 			research_leader = {
@@ -671,30 +670,26 @@ tech_sentient_ai = {
 tech_combat_computers_1 = {
 	area = physics
 	tier = 1
-	cost = @tier1cost2
+	cost = @tier1cost3
 	category = { computing }	
 	ai_update_type = military
 	prerequisites = { "tech_administrative_ai" }
-	weight = @tier1weight2
+	weight = @tier1weight3
 	
 	# unlocks aggressive / defensive combat computers
 	
 	weight_modifier = {
 		modifier = {
 			factor = 2
-			has_technology = tech_spaceport_3
-		}
-		modifier = {
-			factor = 2
-			has_technology = tech_spaceport_4
+			has_technology = tech_destroyers
 		}		
 		modifier = {
 			factor = 2
-			has_technology = tech_spaceport_5
+			has_technology = tech_cruisers
 		}		
 		modifier = {
 			factor = 2
-			has_technology = tech_spaceport_6
+			has_technology = tech_battleships
 		}		
 		modifier = {
 			factor = 1.25
@@ -706,7 +701,8 @@ tech_combat_computers_1 = {
 	}
 	
 	prereqfor_desc = {
-		component = {
+		hide_prereq_for_desc = component
+		custom = {
 			title = "TECH_UNLOCK_COMBAT_COMPUTERS_1_TITLE"
 			desc = "TECH_UNLOCK_COMBAT_COMPUTERS_1_DESC"
 		}
@@ -726,12 +722,12 @@ tech_combat_computers_1 = {
 
 tech_combat_computers_2 = {
 	area = physics
-	tier = 2
-	cost = @tier2cost2
+	tier = 3
+	cost = @tier3cost1
 	category = { computing }
 	ai_update_type = military
 	prerequisites = { "tech_combat_computers_1" "tech_self_aware_logic" }
-	weight = @tier2weight2
+	weight = @tier3weight1
 	
 	# unlocks additional combat computers
 	
@@ -746,7 +742,8 @@ tech_combat_computers_2 = {
 	}
 	
 	prereqfor_desc = {
-		component = {
+		hide_prereq_for_desc = component
+		custom = {
 			title = "TECH_UNLOCK_COMBAT_COMPUTERS_2_TITLE"
 			desc = "TECH_UNLOCK_COMBAT_COMPUTERS_2_DESC"
 		}
@@ -765,15 +762,90 @@ tech_combat_computers_2 = {
 
 tech_combat_computers_3 = {
 	area = physics
-	tier = 3
-	cost = @tier3cost1
+	tier = 4
+	cost = @tier4cost2
 	category = { computing }
 	ai_update_type = military
-	is_rare = yes	
-	prerequisites = { "tech_combat_computers_2" "tech_sentient_ai" }
-	weight = @tier3weight1
+	is_rare = yes
+	is_dangerous = yes
+	prerequisites = { "tech_combat_computers_2" "tech_sapient_ai" }
+	weight = @tier4weight2
 	
-	# unlocks sentient combat computers
+	# unlocks sapient combat computers
+	
+	potential = {
+		NOT = { has_ethic = ethic_gestalt_consciousness }
+	}
+	
+	weight_modifier = {
+		factor = 0.5
+		modifier = {
+			factor = 0.20
+			NOR = {
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_expertise_computing"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_curator"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_maniacal"
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			has_policy_flag = ai_outlawed
+		}
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
+				has_level > 2
+			}
+		}
+		#BREAKTHROUGH - check for scientist
+	}
+	
+	prereqfor_desc = {
+		hide_prereq_for_desc = component
+		custom = {
+			title = "TECH_UNLOCK_COMBAT_COMPUTERS_3_TITLE"
+			desc = "TECH_UNLOCK_COMBAT_COMPUTERS_3_DESC"
+		}
+	}
+	
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
+			}
+		}
+	}
+}
+
+tech_combat_computers_autonomous = {
+	area = physics
+	tier = 4
+	cost = @tier4cost2
+	category = { computing }
+	ai_update_type = military
+	is_rare = yes
+	is_dangerous = yes
+	prerequisites = { "tech_combat_computers_2" }
+	weight = @tier4weight2
+	
+	# unlocks autonomous combat computers
+	
+	potential = {
+		has_ethic = ethic_gestalt_consciousness
+	}
 	
 	weight_modifier = {
 		factor = 0.5
@@ -802,13 +874,13 @@ tech_combat_computers_3 = {
 				has_level > 2
 			}
 		}
-		#BREAKTHROUGH - check for scientist
 	}
 	
 	prereqfor_desc = {
-		component = {
-			title = "TECH_UNLOCK_COMBAT_COMPUTERS_3_TITLE"
-			desc = "TECH_UNLOCK_COMBAT_COMPUTERS_3_DESC"
+		hide_prereq_for_desc = component
+		custom = {
+			title = "TECH_UNLOCK_COMBAT_COMPUTERS_AUTONOMOUS_TITLE"
+			desc = "TECH_UNLOCK_COMBAT_COMPUTERS_AUTONOMOUS_DESC"
 		}
 	}
 	
@@ -823,17 +895,57 @@ tech_combat_computers_3 = {
 	}
 }
 
-tech_synchronized_defences = {
+tech_auxiliary_fire_control = {
 	area = physics
 	tier = 1
-	cost = @tier1cost2
+	cost = @tier1cost3
+	category = { computing }	
+	ai_update_type = military
+	prerequisites = { "tech_combat_computers_1" }
+	weight = @tier1weight3
+	
+	# unlocks aggressive / defensive combat computers
+	
+	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
+			}
+		}
+	}
+	
+	prereqfor_desc = {
+		component = {
+			title = "TECH_UNLOCK_FIRE_CONTROL_1_TITLE"
+			desc = "TECH_UNLOCK_FIRE_CONTROL_1_DESC"
+		}
+	}
+	
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
+			}
+		}
+	}
+}
+
+tech_synchronized_defences = {
+	area = physics
+	tier = 4
+	cost = @tier4cost2
 	category = { computing }
 	ai_update_type = military		
-	prerequisites = { "tech_administrative_ai" }
+	prerequisites = { "tech_self_aware_logic" }
 	is_rare = yes
-	weight = @tier1weight2
+	weight = @tier4weight2
 	
-	# unlocks orbital module - synchronized_defenses
+	# unlocks starbase building - defense-grid supercomputer
 	
 	weight_modifier = {
 		factor = 0.5
@@ -842,7 +954,7 @@ tech_synchronized_defences = {
 			NOR = {
 				research_leader = {
 					area = physics
-					has_trait = "leader_trait_expertise_voidcraft"
+					has_trait = "leader_trait_expertise_computing"
 				}
 				research_leader = {
 					area = physics
@@ -888,8 +1000,16 @@ tech_fission_power = {
 	cost = 0
 	tier = 0
 	start_tech = yes
-	category = { industry }
-	ai_update_type = military
+	category = { particles }
+	ai_update_type = all
+	
+	prereqfor_desc = {
+		hide_prereq_for_desc = component
+		custom = {
+			title = "TECH_UNLOCK_FISSION_POWER_TITLE"
+			desc = "TECH_UNLOCK_FISSION_POWER_DESC"
+		}
+	}
 }
 
 tech_fusion_power = {
@@ -897,29 +1017,31 @@ tech_fusion_power = {
 	cost = @tier1cost2
 	tier = 1
 	category = { particles }
-	ai_update_type = military	
+	ai_update_type = all
 	prerequisites = { "tech_fission_power" }
 	weight = @tier1weight2
 	
-	modifier = {
-		max_energy = 1000
+	gateway = power_generation
+	
+	prereqfor_desc = {
+		hide_prereq_for_desc = component
+		custom = {
+			title = "TECH_UNLOCK_FUSION_POWER_TITLE"
+			desc = "TECH_UNLOCK_FUSION_POWER_DESC"
+		}
 	}
 	
 	weight_modifier = {
-		factor = 1.5
+		factor = 2
 		modifier = {
 			factor = 2
-			has_technology = tech_spaceport_2
-		}
-		modifier = {
-			factor = 2
-			has_technology = tech_spaceport_3
+			has_technology = tech_destroyers
 		}
 		modifier = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_particles"
 			}
 		}
 	}
@@ -930,7 +1052,7 @@ tech_fusion_power = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_particles"
 			}
 		}
 	}
@@ -938,32 +1060,34 @@ tech_fusion_power = {
 
 tech_cold_fusion_power = {
 	area = physics
-	cost = @tier2cost1
+	cost = @tier2cost2
 	tier = 2
 	category = { particles }
-	ai_update_type = military
+	ai_update_type = all
 	prerequisites = { "tech_fusion_power" }
-	weight = @tier2weight1
+	weight = @tier2weight2
 	
-	modifier = {
-		max_energy = 1000
+	gateway = power_generation
+	
+	prereqfor_desc = {
+		hide_prereq_for_desc = component
+		custom = {
+			title = "TECH_UNLOCK_COLD_FUSION_POWER_TITLE"
+			desc = "TECH_UNLOCK_COLD_FUSION_POWER_DESC"
+		}
 	}
 	
 	weight_modifier = {
-		factor = 1.5
+		factor = 2
 		modifier = {
 			factor = 2
-			has_technology = tech_spaceport_4
-		}	
-		modifier = {
-			factor = 2
-			has_technology = tech_spaceport_5
-		}	
+			has_technology = tech_cruisers
+		}
 		modifier = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_particles"
 			}
 		}
 	}	
@@ -974,7 +1098,7 @@ tech_cold_fusion_power = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_particles"
 			}
 		}
 	}
@@ -982,32 +1106,34 @@ tech_cold_fusion_power = {
 
 tech_antimatter_power = {
 	area = physics
-	cost = @tier3cost1
+	cost = @tier3cost2
 	tier = 3
 	category = { particles }
-	ai_update_type = military	
+	ai_update_type = all
 	prerequisites = { "tech_cold_fusion_power" }
-	weight = @tier2weight4
-
-	modifier = {
-		max_energy = 1000
+	weight = @tier3weight2
+	
+	gateway = power_generation
+	
+	prereqfor_desc = {
+		hide_prereq_for_desc = component
+		custom = {
+			title = "TECH_UNLOCK_ANTIMATTER_POWER_TITLE"
+			desc = "TECH_UNLOCK_ANTIMATTER_POWER_DESC"
+		}
 	}
 	
 	weight_modifier = {
-		factor = 1.5
+		factor = 2
 		modifier = {
 			factor = 2
-			has_technology = tech_spaceport_5
-		}			
-		modifier = {
-			factor = 2
-			has_technology = tech_spaceport_6
-		}	
+			has_technology = tech_battleships
+		}
 		modifier = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_particles"
 			}
 		}
 	}
@@ -1018,7 +1144,7 @@ tech_antimatter_power = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_particles"
 			}
 		}
 	}
@@ -1026,28 +1152,34 @@ tech_antimatter_power = {
 
 tech_zero_point_power = {
 	area = physics
-	cost = @tier3cost4
-	tier = 3
+	cost = @tier4cost2
+	tier = 4
 	category = { particles }
-	ai_update_type = military	
+	ai_update_type = all
 	prerequisites = { "tech_antimatter_power" }
-	weight = @tier3weight4
+	weight = @tier4weight2
 	
-	modifier = {
-		max_energy = 1000
+	gateway = power_generation
+	
+	prereqfor_desc = {
+		hide_prereq_for_desc = component
+		custom = {
+			title = "TECH_UNLOCK_ZERO_POINT_POWER_TITLE"
+			desc = "TECH_UNLOCK_ZERO_POINT_POWER_DESC"
+		}
 	}
 	
 	weight_modifier = {
-		factor = 1.5
+		factor = 2
 		modifier = {
 			factor = 2
-			has_technology = tech_spaceport_6
-		}	
+			has_technology = tech_battleships
+		}
 		modifier = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_particles"
 			}
 		}
 	}
@@ -1058,11 +1190,84 @@ tech_zero_point_power = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_particles"
 			}
 		}
 	}
 }
+
+tech_reactor_boosters_1 = {
+	area = physics
+	cost = 0
+	tier = 0
+	start_tech = yes
+	category = { particles }
+	ai_update_type = military
+	prerequisites = { "tech_fission_power" }
+}
+
+tech_reactor_boosters_2 = {
+	area = physics
+	cost = @tier1cost3
+	tier = 1
+	category = { particles }
+	ai_update_type = all
+	prerequisites = { "tech_fusion_power" "tech_reactor_boosters_1" }
+	weight = @tier1weight3
+	
+	weight_modifier = {
+		factor = 1.5
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+	}
+	
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+	}
+}
+
+tech_reactor_boosters_3 = {
+	area = physics
+	cost = @tier3cost3
+	tier = 1
+	category = { particles }
+	ai_update_type = all
+	prerequisites = { "tech_antimatter_power" "tech_reactor_boosters_2" }
+	weight = @tier3weight3
+	
+	weight_modifier = {
+		factor = 1.5
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+	}
+	
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+	}
+}
+
 
 # ##################
 # Shields and related techs
@@ -1070,37 +1275,12 @@ tech_zero_point_power = {
 
 tech_shields_1 = {
 	area = physics
-	cost = @tier1cost1
-	tier = 1
+	cost = 0
+	tier = 0
 	category = { field_manipulation }
 	ai_update_type = all
-	weight = @tier1weight1
-	
-	modifier = {
-		planet_fortification_strength = 0.2
-	}
-	
-	weight_modifier = {
-		factor = 1.25
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
-	
-	ai_weight = {
-		factor = 2 #good component
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
+	prerequisites = { "tech_basic_science_lab_1" }
+	start_tech = yes
 }
 
 tech_shields_2 = {
@@ -1111,11 +1291,7 @@ tech_shields_2 = {
 	ai_update_type = all
 	prerequisites = { "tech_shields_1" }
 	weight = @tier1weight3
-	
-	modifier = {
-		planet_fortification_strength = 0.2
-	}
-	
+
 	weight_modifier = {
 		factor = 1.25
 		modifier = {
@@ -1141,16 +1317,12 @@ tech_shields_2 = {
 
 tech_shields_3 = {
 	area = physics
-	cost = @tier2cost1
+	cost = @tier2cost3
 	tier = 2
 	category = { field_manipulation }
 	ai_update_type = all
 	prerequisites = { "tech_shields_2" }
-	weight = @tier2weight1
-	
-	modifier = {
-		planet_fortification_strength = 0.2
-	}
+	weight = @tier2weight3
 	
 	weight_modifier = {
 		factor = 1.25
@@ -1177,16 +1349,12 @@ tech_shields_3 = {
 
 tech_shields_4 = {
 	area = physics
-	cost = @tier2cost3
-	tier = 2
+	cost = @tier3cost3
+	tier = 3
 	category = { field_manipulation }
 	ai_update_type = all
 	prerequisites = { "tech_shields_3" }
-	weight = @tier2weight3
-	
-	modifier = {
-		planet_fortification_strength = 0.2
-	}
+	weight = @tier3weight3
 	
 	weight_modifier = {
 		factor = 1.25
@@ -1213,17 +1381,13 @@ tech_shields_4 = {
 
 tech_shields_5 = {
 	area = physics
-	cost = @tier3cost2
-	tier = 3
+	cost = @tier4cost3
+	tier = 4
 	category = { field_manipulation }
 	ai_update_type = all
 	prerequisites = { "tech_shields_4" }
-	weight = @tier3weight2
-	
-	modifier = {
-		planet_fortification_strength = 0.2
-	}
-	
+	weight = @tier4weight3
+
 	weight_modifier = {
 		factor = 1.25
 		modifier = {
@@ -1249,12 +1413,12 @@ tech_shields_5 = {
 
 tech_shield_rechargers_1 = {
 	area = physics
-	cost = @tier2cost2
+	cost = @tier2cost3
 	tier = 2
 	category = { field_manipulation }
 	ai_update_type = all	
 	prerequisites = { "tech_shields_3" }
-	weight = @tier2weight2
+	weight = @tier2weight3
 	
 	weight_modifier = {
 		modifier = {
@@ -1274,70 +1438,19 @@ tech_shield_rechargers_1 = {
 				area = physics
 				has_trait = "leader_trait_expertise_field_manipulation"
 			}
-		}
-	}
-}
-
-tech_shield_recharge_aura_1 = {
-	area = physics
-	cost = @tier2cost4
-	tier = 2
-	category = { field_manipulation }
-	ai_update_type = all	
-	is_rare = yes
-	prerequisites = { "tech_shields_4" }
-	weight = @tier2weight4
-	
-	weight_modifier = {
-		factor = 0.5
-		modifier = {
-			factor = 0.5
-			NOR = {
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_expertise_field_manipulation"
-				}			
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_curator"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_spark_of_genius"
-				}
-			}
-		}
-	}
-	
-	ai_weight = {
-		factor = 2 #good component
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
-	
-		
-	prereqfor_desc = {
-		component = {
-			title = "TECH_UNLOCK_SHIELD_RECHARGE_AURA_1_TITLE"
-			desc = "TECH_UNLOCK_SHIELD_RECHARGE_AURA_1_DESC"
 		}
 	}
 }
 
 tech_planetary_shield_generator = {
 	area = physics
-	cost = @tier1cost4
-	tier = 2
+	cost = @tier3cost1
+	tier = 3
 	category = { field_manipulation }
 	ai_update_type = all	
 	is_rare = yes
-	prerequisites = { "tech_shields_2" }
-	weight = @tier1weight4
+	prerequisites = { "tech_shields_3" }
+	weight = @tier3weight1
 	
 	weight_modifier = {
 		factor = 0.5
@@ -1364,46 +1477,27 @@ tech_planetary_shield_generator = {
 }
 
 # ##################
-# Psionic Shield
-# ##################
-
-tech_psionic_shield = {
-	area = physics
-	cost = @tier3cost4
-	tier = 3
-	category = { psionics }
-	ai_update_type = all	
-	is_rare = yes
-	prerequisites = { "tech_psionic_theory" }
-	weight = 0
-	
-	weight_modifier = {
-		factor = 0
-	}	
-}
-
-# ##################
 # Sensors
 # ##################
 
 tech_sensors_2 = {
 	area = physics
-	cost = @tier1cost1
-	tier = 1
-	category = { voidcraft }
+	cost = @tier2cost1
+	tier = 2
+	category = { computing }
 	ai_update_type = all
-	weight = @tier1weight1
-	
-	modifier = {
-		planet_sensor_range_mult = 0.5
-	}
+	weight = @tier2weight1
 	
 	weight_modifier = {
 		modifier = {
 			factor = 1.25
+			has_tradition = tr_discovery_adopt
+		}
+		modifier = {
+			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_voidcraft"
+				has_trait = "leader_trait_expertise_computing"
 			}
 		}
 	}
@@ -1414,7 +1508,7 @@ tech_sensors_2 = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_voidcraft"
+				has_trait = "leader_trait_expertise_computing"
 			}
 		}
 	}
@@ -1429,23 +1523,23 @@ tech_sensors_2 = {
 
 tech_sensors_3 = {
 	area = physics
-	cost = @tier2cost1
-	tier = 2
-	category = { voidcraft }
+	cost = @tier3cost1
+	tier = 3
+	category = { computing }
 	ai_update_type = all	
 	prerequisites = { "tech_sensors_2" }
-	weight = @tier2weight1
-	
-	modifier = {
-		planet_sensor_range_mult = 0.5
-	}
+	weight = @tier3weight1
 	
 	weight_modifier = {
 		modifier = {
 			factor = 1.25
+			has_tradition = tr_discovery_adopt
+		}
+		modifier = {
+			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_voidcraft"
+				has_trait = "leader_trait_expertise_computing"
 			}
 		}
 	}
@@ -1456,7 +1550,7 @@ tech_sensors_3 = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_voidcraft"
+				has_trait = "leader_trait_expertise_computing"
 			}
 		}
 	}
@@ -1471,23 +1565,23 @@ tech_sensors_3 = {
 
 tech_sensors_4 = {
 	area = physics
-	cost = @tier3cost1
-	tier = 3
-	category = { voidcraft }
+	cost = @tier4cost1
+	tier = 4
+	category = { computing }
 	ai_update_type = all	
 	prerequisites = { "tech_sensors_3" }
-	weight = @tier3weight1
-		
-	modifier = {
-		planet_sensor_range_mult = 0.5
-	}
+	weight = @tier4weight1
 	
 	weight_modifier = {
 		modifier = {
 			factor = 1.25
+			has_tradition = tr_discovery_adopt
+		}
+		modifier = {
+			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_voidcraft"
+				has_trait = "leader_trait_expertise_computing"
 			}
 		}
 	}	
@@ -1498,7 +1592,7 @@ tech_sensors_4 = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_voidcraft"
+				has_trait = "leader_trait_expertise_computing"
 			}
 		}
 	}
@@ -1511,76 +1605,6 @@ tech_sensors_4 = {
 	}
 }
 
-tech_orbital_sensor_array = {
-	area = physics
-	cost = @tier1cost2
-	tier = 1
-	category = { voidcraft }
-	is_rare = yes	
-	prerequisites = { "tech_sensors_2" }
-	weight = @tier1weight2
-	
-	# unlocks observatory orbital module
-	
-	weight_modifier = {
-		factor = 0.5
-		modifier = {
-			factor = 0.5
-			NOR = {
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_expertise_voidcraft"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_curator"
-				}
-			}
-		}
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_voidcraft"
-				has_level > 2
-			}
-		}
-		modifier = {
-			factor = 1.50
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_voidcraft"
-				has_level > 3
-			}
-		}
-		modifier = {
-			factor = 1.10
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_maniacal"
-			}
-		}
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_spark_of_genius"
-			}
-		}
-	}
-	
-	ai_weight = {
-		factor = 3	#rare tech
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_voidcraft"
-			}
-		}
-	}
-}
-
 # ##################
 # Power Plants
 # ##################
@@ -1589,7 +1613,7 @@ tech_power_plant_1 = {
 	cost = 0
 	area = physics
 	tier = 0
-	category = { industry }
+	category = { field_manipulation }
 	start_tech = yes
 		
 	## unlock power plant lvl 1
@@ -1600,21 +1624,25 @@ tech_power_plant_2 = {
 	cost = @tier1cost1
 	area = physics
 	tier = 1
-	category = { industry }	
+	category = { field_manipulation }	
 	prerequisites = { "tech_power_plant_1" }
 	weight = @tier1weight1
 		
 	## unlock power plant lvl 2	
 	modifier = {
-		max_energy = 2000
+		max_energy = 10000
 	}
 	
 	weight_modifier = {
 		modifier = {
 			factor = 1.25
+			has_tradition = tr_prosperity_adopt
+		}
+		modifier = {
+			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_field_manipulation"
 			}
 		}
 	}
@@ -1625,7 +1653,7 @@ tech_power_plant_2 = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_field_manipulation"
 			}
 		}
 	}
@@ -1633,25 +1661,28 @@ tech_power_plant_2 = {
 
 #Power Plant III
 tech_power_plant_3 = {
-	cost = @tier1cost4
+	cost = @tier2cost3
 	area = physics
-	tier = 1
-	category = { industry }
+	tier = 2
+	category = { field_manipulation }
 	prerequisites = { "tech_power_plant_2" "tech_colonial_centralization"}
-	weight = @tier1weight4
+	weight = @tier2weight3
 		
 	## unlock power plant lvl 3
-	
 	modifier = {
-		max_energy = 2000
-	}	
+		max_energy = 10000
+	}
 	
 	weight_modifier = {
 		modifier = {
 			factor = 1.25
+			has_tradition = tr_prosperity_adopt
+		}
+		modifier = {
+			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_field_manipulation"
 			}
 		}
 	}
@@ -1662,7 +1693,7 @@ tech_power_plant_3 = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_field_manipulation"
 			}
 		}
 	}
@@ -1670,25 +1701,28 @@ tech_power_plant_3 = {
 
 #Power Plant IV
 tech_power_plant_4 = {
-	cost = @tier3cost2
+	cost = @tier4cost2
 	area = physics
-	tier = 3
-	category = { industry }
+	tier = 4
+	category = { field_manipulation }
 	prerequisites = { "tech_power_plant_3" "tech_galactic_administration"}
-	weight = @tier3weight2
+	weight = @tier4weight2
 		
 	## unlock power plant lvl 4
-	
 	modifier = {
-		max_energy = 2000
+		max_energy = 10000
 	}	
 	
 	weight_modifier = {
 		modifier = {
 			factor = 1.25
+			has_tradition = tr_prosperity_adopt
+		}
+		modifier = {
+			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_field_manipulation"
 			}
 		}
 	}
@@ -1699,62 +1733,31 @@ tech_power_plant_4 = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_field_manipulation"
 			}
 		}
-	}
-}
-
-#Solar Panel Network
-tech_solar_panel_network = {
-	cost = @tier1cost1
-	area = physics
-	tier = 1
-	category = { industry }
-	prerequisites = { "tech_space_construction" }
-	weight = @tier1weight1
-	
-	# ## unlock orbital building - solar panel network
-	
-	weight_modifier = {
-		modifier = {
-			is_ai = yes
-			factor = 10
-		}
-		modifier = {
-			factor = 2
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_industry"
-			}
-		}
-	}
-	
-	ai_weight = {
-		factor = 10
 	}
 }
 
 #Global Energy Management
 tech_power_hub_1 = {
-	cost = @tier1cost1
+	cost = @tier1cost2
 	area = physics
 	tier = 1
-	category = { industry }	
+	category = { field_manipulation }	
 	prerequisites = { "tech_power_plant_1" }
-	weight = @tier1weight1
+	weight = @tier1weight2
 		
-	# unlock power hub 1
-	modifier = {
-		max_energy = 2500
-	}
-	
 	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_prosperity_adopt
+		}
 		modifier = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_field_manipulation"
 			}			
 		}
 	}
@@ -1764,7 +1767,7 @@ tech_power_hub_1 = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_field_manipulation"
 			}
 		}
 	}
@@ -1772,24 +1775,23 @@ tech_power_hub_1 = {
 
 #Planetary Power Grid
 tech_power_hub_2 = {
-	cost = @tier2cost2
+	cost = @tier3cost1
 	area = physics
-	tier = 2
-	category = { industry }	
+	tier = 3
+	category = { field_manipulation }	
 	prerequisites = { "tech_power_hub_1" "tech_colonial_centralization"}
-	weight = @tier2weight2
+	weight = @tier3weight1
 		
-	# unlock power hub 2
-	modifier = {
-		max_energy = 2500
-	}	
-	
 	weight_modifier = {
+		modifier = {
+			factor = 2
+			has_tradition = tr_prosperity_adopt
+		}
 		modifier = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_field_manipulation"
 			}			
 		}
 	}
@@ -1799,7 +1801,7 @@ tech_power_hub_2 = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_industry"
+				has_trait = "leader_trait_expertise_field_manipulation"
 			}
 		}
 	}
@@ -1810,129 +1812,15 @@ tech_power_hub_2 = {
 # FTL Drives 
 # ##################
 
-tech_wormhole_generation_1  = {
-	cost = 0
-	area = physics
-	tier = 0
-	category = { field_manipulation }
-	
-	is_reverse_engineerable = no
-	
-	weight_modifier = {
-		factor = 1
-		modifier = {
-			factor = 0
-			OR = {
-				has_technology = "tech_hyper_drive_1"
-				has_technology = "tech_warp_drive_1"
-			}
-		}
-	}
-	
-	prereqfor_desc = {
-		component = {
-			title = "TECH_UNLOCK_WORMHOLE_1_TITLE"
-			desc = "TECH_UNLOCK_WORMHOLE_1_DESC"
-		}
-	}	
-}
-
-tech_wormhole_generation_2  = {
-	cost = @tier2cost1
-	area = physics
-	tier = 2
-	category = { field_manipulation }
-	ai_update_type = all
-	is_reverse_engineerable = no
-	prerequisites = { "tech_wormhole_generation_1" }
-	weight = @tier2weight1
-	
-	weight_modifier = {
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
-	
-	modifier = {
-		ship_ftl_wormhole_speed_mult = 0.25
-		ship_ftl_wormhole_range_mult = 0.5
-	}
-	
-	ai_weight = {
-		factor = 4 #FTL techs are good
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
-}
-
-tech_wormhole_generation_3  = {
-	cost = @tier3cost1
-	area = physics
-	tier = 3
-	category = { field_manipulation }
-	ai_update_type = all
-	is_reverse_engineerable = no	
-	prerequisites = { "tech_wormhole_generation_2" }
-	weight = @tier3weight1
-	
-	weight_modifier = {
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
-	
-	modifier = {
-		ship_ftl_wormhole_speed_mult = 0.25
-		ship_ftl_wormhole_range_mult = 0.5
-	}
-	
-	ai_weight = {
-		factor = 4 #FTL techs are good
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
-}
-
-tech_hyper_drive_1  = {
+tech_hyper_drive_1 = {
 	cost = 0
 	area = physics
 	tier = 0
 	category = { particles }
-	
-	feature_flags = {
-		hyperlanes
-	}
+	prerequisites = { "tech_basic_science_lab_1" }
+	start_tech = yes
 	
 	is_reverse_engineerable = no
-	
-	weight_modifier = {
-		factor = 1
-		modifier = {
-			factor = 0
-			OR = {
-				has_technology = "tech_warp_drive_1"
-				has_technology = "tech_wormhole_generation_1"
-			}
-		}
-	}
 	
 	prereqfor_desc = {
 		component = {
@@ -1943,16 +1831,20 @@ tech_hyper_drive_1  = {
 }
 
 tech_hyper_drive_2 = {
-	cost = @tier2cost1
+	cost = @tier2cost2
 	area = physics
 	tier = 2
 	category = { particles }
 	ai_update_type = all
 	is_reverse_engineerable = no
 	prerequisites = { "tech_hyper_drive_1" }
-	weight = @tier2weight1
+	weight = @tier2weight2
 	
 	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_discovery_adopt
+		}
 		modifier = {
 			factor = 1.25
 			research_leader = {
@@ -1982,16 +1874,20 @@ tech_hyper_drive_2 = {
 }
 
 tech_hyper_drive_3 = {
-	cost = @tier3cost1
+	cost = @tier3cost3
 	area = physics
 	tier = 3
 	category = { particles }
 	ai_update_type = all
 	is_reverse_engineerable = no
 	prerequisites = { "tech_hyper_drive_2" }
-	weight = @tier3weight1
+	weight = @tier3weight3
 	
 	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_discovery_adopt
+		}
 		modifier = {
 			factor = 1.25
 			research_leader = {
@@ -2020,172 +1916,26 @@ tech_hyper_drive_3 = {
 	}
 }
 
-tech_hyperlane_mapping = {
-	cost = @tier2cost1
+tech_wormhole_stabilization = {
+	cost = @tier3cost1
 	area = physics
-	tier = 2
+	tier = 3
 	category = { particles }
-	
 	is_rare = yes
-	weight = @tier2weight1
+	is_reverse_engineerable = no
+	weight = @tier3weight1
+	prerequisites = { "tech_hyper_drive_2" }
 	
-	feature_flags = {
-		hyperlanes
-	}
+	feature_flags = { wormhole_stabilization }
 	
 	weight_modifier = {
 		factor = 0.5
 		modifier = {
-			factor = 0.20
+			factor = 0.5
 			NOR = {
 				research_leader = {
 					area = physics
 					has_trait = "leader_trait_expertise_particles"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_curator"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_maniacal"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_spark_of_genius"
-				}
-			}
-		}		
-		#maybe add factor if discovered debris with hyperlane drive
-		modifier = {
-			factor = 0
-			has_technology = "tech_hyper_drive_1"
-		}
-	}
-	
-	ai_weight = {
-		factor = 0	#AI doesn't need it :O
-	}
-}
-
-tech_warp_drive_1 = {
-	cost = 0
-	area = physics
-	tier = 0
-	category = { field_manipulation }
-	
-	is_reverse_engineerable = no
-	
-	weight_modifier = {
-		factor = 0
-	}
-	
-	prereqfor_desc = {
-		component = {
-			title = "TECH_UNLOCK_WARPDRIVE_1_TITLE"
-			desc = "TECH_UNLOCK_WARPDRIVE_1_DESC"
-		}
-	}
-}
-
-tech_warp_drive_2 = {
-	cost = @tier2cost1
-	area = physics
-	tier = 2
-	category = { field_manipulation }
-	ai_update_type = all
-	is_reverse_engineerable = no	
-	prerequisites = { "tech_warp_drive_1" }
-	weight = @tier2weight1
-	
-	weight_modifier = {
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
-	
-	prereqfor_desc = {
-		component = {
-			title = "TECH_UNLOCK_WARPDRIVE_2_TITLE"
-			desc = "TECH_UNLOCK_WARPDRIVE_2_DESC"
-		}
-	}
-	
-	ai_weight = {
-		factor = 4 #FTL techs are good
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
-}
-
-tech_warp_drive_3 = {
-	cost = @tier3cost1
-	area = physics
-	tier = 3
-	category = { field_manipulation }
-	ai_update_type = all
-	is_reverse_engineerable = no	
-	prerequisites = { "tech_warp_drive_2" }
-	weight = @tier3weight1
-	
-	weight_modifier = {
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
-	
-	prereqfor_desc = {
-		component = {
-			title = "TECH_UNLOCK_WARPDRIVE_3_TITLE"
-			desc = "TECH_UNLOCK_WARPDRIVE_3_DESC"
-		}
-	}
-
-	ai_weight = {
-		factor = 4 #FTL techs are good
-		modifier = {
-			factor = 1.25
-			research_leader = {
-				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
-			}
-		}
-	}
-}
-
-tech_jump_drive_1 = {
-	cost = @tier3cost1
-	area = physics
-	tier = 3
-	category = { field_manipulation }
-	ai_update_type = all
-	is_reverse_engineerable = yes
-	is_rare = yes
-	is_dangerous = yes
-	weight = @tier3weight1
-	prerequisites = { "tech_zero_point_power" }
-	
-	weight_modifier = {
-		factor = 0.1
-		modifier = {
-			factor = 0.1
-			NOR = {
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_expertise_field_manipulation"
 				}
 				research_leader = {
 					area = physics
@@ -2201,10 +1951,227 @@ tech_jump_drive_1 = {
 				}
 			}		
 		}
-		
 		modifier = {
-			factor = 0.5
-			NOT = { has_technology = tech_wormhole_generation_3 }
+			factor = 1.25
+			has_tradition = tr_discovery_adopt
+		}
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_seen_any_bypass = wormhole 
+				any_relation = {
+					is_country_type = default
+					has_communications = ROOT
+					has_technology = tech_wormhole_stabilization
+				}				
+			}
+		}
+		modifier = {
+			factor = 4
+			owns_any_bypass = wormhole
+		}
+	}
+	
+	ai_weight = {
+		factor = 4 #FTL techs are good
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+	}
+}
+
+tech_gateway_activation = {
+	cost = @tier4cost3
+	area = physics
+	tier = 4
+	category = { particles }
+	is_rare = yes
+	is_reverse_engineerable = no
+	weight = @tier4weight3
+	prerequisites = { "tech_hyper_drive_3" }
+	
+	feature_flags = { gateway_activation }
+	
+	weight_modifier = {
+		factor = 0.5
+		modifier = {
+			factor = 0.1
+			NOR = {
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_expertise_particles"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_curator"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_spark_of_genius"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_maniacal"
+				}
+			}		
+		}
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_discovery_adopt
+		}
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_seen_any_bypass = gateway
+				any_relation = {
+					is_country_type = default
+					has_communications = ROOT
+					has_technology = tech_gateway_activation
+				}
+			}
+		}
+		modifier = {
+			factor = 4
+			owns_any_bypass = gateway
+		}
+	}
+	
+	ai_weight = {
+		factor = 4 #FTL techs are good
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+	}
+}
+
+tech_gateway_construction = {
+	cost = @tier5cost3
+	area = physics
+	tier = 5
+	category = { particles }
+	is_rare = yes
+	is_reverse_engineerable = no
+	weight = @tier5cost3
+	prerequisites = { "tech_gateway_activation" "tech_mega_engineering"}
+	
+	feature_flags = { gateway_construction }
+	
+	weight_modifier = {
+		factor = 0.5
+		modifier = {
+			factor = 0.1
+			NOR = {
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_expertise_particles"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_curator"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_spark_of_genius"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_maniacal"
+				}
+			}		
+		}
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_discovery_adopt
+		}
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+		modifier = {
+			factor = 4
+			owns_any_bypass = gateway
+		}
+	}
+	
+	ai_weight = {
+		factor = 4 #FTL techs are good
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+	}
+}
+
+tech_jump_drive_1 = {
+	cost = @tier5cost1
+	area = physics
+	tier = 5
+	category = { particles }
+	ai_update_type = all
+	is_reverse_engineerable = yes
+	is_rare = yes
+	is_dangerous = yes
+	weight = @tier5weight1
+	prerequisites = { "tech_zero_point_power" }
+	
+	feature_flags = {
+		jump_method
+	}
+	
+	weight_modifier = {
+		factor = 0.1
+		modifier = {
+			factor = 0.1
+			NOR = {
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_expertise_particles"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_curator"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_spark_of_genius"
+				}
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_maniacal"
+				}
+			}		
+		}
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_discovery_adopt
 		}
 	}
 	
@@ -2224,102 +2191,92 @@ tech_jump_drive_1 = {
 # Debuff auras
 # ##################
 
-
-tech_aura_quantum_destabilizer = {
+tech_ftl_inhibitor = {
 	area = physics
-	cost = @tier2cost4
+	cost = @tier2cost2
 	tier = 2
-	category = { field_manipulation }
-	ai_update_type = military	
-	is_rare = yes
-	prerequisites = { "tech_shields_3" }
-	weight = @tier2weight4
+	category = { particles }
+	prerequisites = { "tech_hyper_drive_1" }
+	weight = @tier2weight2
 	
-	weight_modifier = {
-		factor = 0.5
-		modifier = {
-			factor = 0.20
-			NOR = {
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_expertise_field_manipulation"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_curator"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_spark_of_genius"
-				}
-				research_leader = {
-					area = physics
-					has_trait = "leader_trait_maniacal"
-				}
-			}		
-		}
+	feature_flags = {
+		planetary_ftl_inhibitor
 	}
-	
-	ai_weight = {
-		factor = 2 #good component
+
+	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_supremacy_adopt
+		}
 		modifier = {
 			factor = 1.25
 			research_leader = {
 				area = physics
-				has_trait = "leader_trait_expertise_field_manipulation"
+				has_trait = "leader_trait_expertise_particles"
 			}
 		}
 	}
 	
-		
-	prereqfor_desc = {
-		component = {
-			title = "TECH_UNLOCK_QUANTUM_DESTABILIZER_AURA_1_TITLE"
-			desc = "TECH_UNLOCK_QUANTUM_DESTABILIZER_AURA_1_DESC"
+	ai_weight = {
+		factor = 4 #FTL inhibitor is really good
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
 		}
 	}
 }
 
 # ##################
-# Ascension Perk
+# Matter Generator
 # ##################
 
-tech_ascension_theory = {
+tech_matter_generator = {
 	area = physics
-	cost = 8000
-	tier = 4
-	category = { computing }
-	ai_update_type = all
+	cost = @tier5cost1
+	tier = 5
+	category = { particles }
+	prerequisites = { "tech_zero_point_power" "tech_colonial_centralization" }
+	weight = @tier5weight1
 	is_rare = yes
-	weight = @tier3weight4
-	
-	modifier = {
-		ascension_perks_add = 1
-	}
 	
 	weight_modifier = {
 		factor = 0.5
 		modifier = {
-			factor = 0
-			NOT = { host_has_dlc = "Utopia" }
-		}
-		modifier = {
-			factor = 0.20
+			factor = 0.25
 			NOR = {
-				has_modifier = "curator_insight"
+				research_leader = {
+					area = physics
+					has_trait = "leader_trait_expertise_particles"
+				}
 				research_leader = {
 					area = physics
 					has_trait = "leader_trait_curator"
 				}
 				research_leader = {
 					area = physics
-					has_trait = "leader_trait_expertise_computing"
-				}			
+					has_trait = "leader_trait_maniacal"
+				}				
+			}
+		}
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_computing"
 			}
 		}
 	}
 	
 	ai_weight = {
-		weight = 9999
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
 	}
 }
