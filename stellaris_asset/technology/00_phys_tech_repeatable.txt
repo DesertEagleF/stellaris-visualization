@@ -3,9 +3,9 @@
 ### TECH COSTS - REPEATABLE  ###
 ###########################
 
-@repeatableTechBaseCost = 3000
-@repeatableTechLevelCost = 1000
-
+@repeatableTechBaseCost = 20000
+@repeatableTechLevelCost = 5000
+@repeatableTechTier = 5
 
 ###########################
 ### TECH WEIGHTS - REPEATABLE  ###
@@ -19,8 +19,8 @@ tech_repeatable_improved_tile_energy_output = {
 	area = physics
 	cost = @repeatableTechBaseCost
 	cost_per_level = @repeatableTechLevelCost
-	tier = 3
-	category = { industry }
+	tier = @repeatableTechTier
+	category = { field_manipulation }
 	levels = -1
 	prerequisites = {"tech_power_plant_3"}
 	weight = @repeatableTechWeight
@@ -49,7 +49,7 @@ tech_repeatable_improved_shield_output = {
 	area = physics
 	cost = @repeatableTechBaseCost
 	cost_per_level = @repeatableTechLevelCost
-	tier = 3
+	tier = @repeatableTechTier
 	category = { field_manipulation }
 	ai_update_type = all
 	levels = -1
@@ -72,7 +72,7 @@ tech_repeatable_improved_shield_output = {
 	}
 	
 	modifier = {
-		ship_shield_hp_mult = 0.05
+		ship_shield_mult = 0.05
 	}
 }
 
@@ -80,7 +80,7 @@ tech_repeatable_weapon_type_energy_damage = {
 	area = physics
 	cost = @repeatableTechBaseCost
 	cost_per_level = @repeatableTechLevelCost
-	tier = 3
+	tier = @repeatableTechTier
 	category = { particles }
 	ai_update_type = military
 	levels = -1
@@ -111,7 +111,7 @@ tech_repeatable_weapon_type_energy_fire_rate = {
 	area = physics
 	cost = @repeatableTechBaseCost
 	cost_per_level = @repeatableTechLevelCost
-	tier = 3
+	tier = @repeatableTechTier
 	category = { particles }
 	ai_update_type = military
 	levels = -1
@@ -138,42 +138,11 @@ tech_repeatable_weapon_type_energy_fire_rate = {
 	}
 }
 
-tech_repeatable_improved_planet_sensor_range = {
-	area = physics
-	cost = @repeatableTechBaseCost
-	cost_per_level = @repeatableTechLevelCost
-	tier = 3
-	category = { voidcraft }
-	ai_update_type = all
-	levels = -1
-	prerequisites = {"tech_sensors_3"}
-	weight = @repeatableTechWeight
-	
-	weight_modifier = {
-		factor = @repatableTechFactor
-	}
-	
-	ai_weight = {
-		factor = 1.0
-	}
-	
-	weight_groups = {
-		repeatable
-	}
-	mod_weight_if_group_picked = {
-		repeatable = 0.01
-	}
-	
-	modifier = {
-		planet_sensor_range_mult = 0.1
-	}
-}
-
 tech_repeatable_reduced_building_cost = {
 	area = physics
 	cost = @repeatableTechBaseCost
 	cost_per_level = @repeatableTechLevelCost
-	tier = 3
+	tier = @repeatableTechTier
 	category = { computing }
 	levels = 5
 	prerequisites = { "tech_physics_lab_2" }
